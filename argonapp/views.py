@@ -18,7 +18,7 @@ def sign_in(request):
         password = request.POST['password']
         print('email',email)
 
-        #user=auth.authenticate(email=email,password=password)
+        user=auth.authenticate(email=email,password=password)
         return redirect('/')
 
     return render(request, 'sign-in.html')
