@@ -10,7 +10,7 @@ from django.conf import settings
 # Create your views here.
 def index(request):
 
-    return render(request,"index.html")
+    return render(request,"dashboard.html")
 
 def helo(request):
     return  HttpResponse('<h1> Hello world </h1>')
