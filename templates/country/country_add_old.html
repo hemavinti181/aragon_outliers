@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    {#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">#}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <title>Country</title>
+</head>
+<body>
+    <div class="d-flex flex-row">
+        <div>
+            <form id="form_new_site" action="{% url 'country_entry' %}" method="post"
+                  enctype="multipart/form-data"> {% csrf_token %}
+                <div class="form-group ">
+                    <input type="hidden" name="id" id="id" value={{ country_qs.id }}>
+                </div>
+                <div class="form-group ">
+                    <label class="control-label" for="country">Country</label>
+                    <input type="text" required class="form-control" name="country" id="country" placeholder="country"
+                           value='{{ country_qs.country }}'>
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <input type="text" class="form-control" name="status" id="status"
+                           placeholder="status" value='{{ country_qs.status }}'>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+
+    <script type="text/javascript">
+        $("#form_new_site").submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                data: $(this).serialize(),
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                success: function (data) {
+                    if (data.hasOwnProperty('country_id')){
+                        window.location.href = "{% url 'country_view' %}?id=" + data.country_id;
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.hasOwnProperty("responseJSON") && xhr.responseJSON.hasOwnProperty("msg")) {
+                        swal({
+                            text: xhr.responseJSON.msg,
+                            icon: "error",
+                            dangerMode: true,
+                        })
+                    }
+                }
+            })
+        })
+
+    </script>
