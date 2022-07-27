@@ -3,30 +3,40 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <title>Country</title>
+    <title>State</title>
 </head>
 <body>
     <div class="d-flex flex-row">
         <div>
-            <form id="form_new_site" action="{% url 'country_entry' %}" method="post"
+            <form id="form_new_site" action="{% url 'state_entry' %}" method="post"
                   enctype="multipart/form-data"> {% csrf_token %}
                 <div class="form-group ">
-                    <input type="hidden" name="id" id="id" value={{ country_qs.id }}>
+                    <input type="hidden" name="id" id="id" value={{ state_qs.id }}>
                 </div>
                 <div class="form-group ">
-                    <label class="control-label" for="country">Country</label>
-                    <input type="text" required class="form-control" name="country" id="country" placeholder="country"
-                           value='{{ country_qs.country }}'>
+                    <label class="control-label" for="state">State</label>
+                    <input type="text" required class="form-control" name="state" id="state" placeholder="state"
+                           value='{{ state_qs.state }}'>
                 </div>
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <select class="selectpicker show-tick form-control" name="country"
+                            id="country" required>
+                        {% for country in countries %}
+                            <option value="{{ country.id }}"
+                                    {% if state_qs.country == country.id %}selected{% endif %}>{{ country.country }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
                 <div class="form-group">
                     <label for="status">Status</label>
                     <select class="selectpicker show-tick form-control" id='status' name='status' required>
-                        <option value="True"{% if country_qs.status %}selected{% endif %}>1</option>
-                        <option value="False"{% if not country_qs.status %}selected{% endif %}>0</option>
+                        <option value="True"{% if state_qs.status %}selected{% endif %}>1</option>
+                        <option value="False"{% if not state_qs.status %}selected{% endif %}>0</option>
                     </select>
                 </div>
 
@@ -45,7 +55,7 @@
                 type: $(this).attr('method'),
                 url: $(this).attr('action'),
                 success: function (data) {
-                        window.location.href = "{% url 'country_view' %};
+                    window.location.href = "{% url 'state_view' %}";
                 },
                 error: function (xhr) {
                     if (xhr.hasOwnProperty("responseJSON") && xhr.responseJSON.hasOwnProperty("msg")) {
