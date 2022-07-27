@@ -1,81 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% extends 'base.html' %}
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    {#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">#}
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <title>Country</title>
-</head>
-<body>
+{% block title %}Login{% endblock %}
 
-<h1>
-    <a href="{% url 'area_view' %}">Area</a>
-    <a href="{% url 'area_add' %}"><i class="fas fa-folder-plus"></i></a>
-</h1>
-
-
-    {% if area_one %}
-        <div class="d-flex flex-row">
-            <div>
-                <h4>{{ area_one.state }}
-                        <a href="{% url 'area_add' %}?id={{ area_one.id }}"><i class="fas fa-edit"></i></a>
-                        <a id="btn_del" href="{% url 'area_delete' %}?id={{ area_one.id }}" class="pl-2"> <i class="fas fa-trash"></i></a>
-                </h4>
-                <ul class="milestones milestones-bordered">
-                    <li> Country: {{ area_one.country_id }}</li>
-                    <li> State: {{ area_one.state }}</li>
-                    <li> City: {{ area_one.city }}</li>
-                    <li> Area: {{ area_one.area }}</li>
-                    <li> status: {{ area_one.status }}</li>
-                    <li> created_at: {{ area_one.created_at }}</li>
-                    <li> updated_at: {{ area_one.updated_at }}</li>
-                </ul>
+{% block htmlbody %}
+<div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <h6>Area table</h6>
+              <div class="card-header pb-0">
+              <div class="d-flex align-items-center">
+                <a href="{% url 'aragonapp:city_add'%}"><button class="btn btn-primary btn-sm ms-auto">Add Area</button></a>
+              </div>
             </div>
-        </div>
-    {% else %}
-
-        <div class="d-flex flex-row">
-            <div>
-                <table class="table">
-                    <thead>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
                     <tr>
-                        <th scope="col">Area</th>
-                        <th scope="col">Country</th>
-                        <th scope="col">State</th>
-                        <th scope="col">City</th>
-                        <th scope="col">status</th>
-                        <th scope="col">created_at</th>
-                        <th scope="col">updated_at</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Country</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">State</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">City</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Area</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">created at</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">updated at</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">actions</th>
+                      <th class="text-secondary opacity-7"></th>
                     </tr>
-                    </thead>
-                    <tbody>
+                  </thead>
+                  <tbody>
+                  {% for areas in area %}
+                    <tr>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">{{ areas.country.country }}</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">{{ areas.state.state }}</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">{{ areas.city.city }}</p>
+                      </td>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">{{ areas.area }}</h6>
+                          </div>
+                        </div>
+                      </td>
 
-                    {% for areas in area %}
-                        <tr>
-                            <td>
-                                <a href="{% url 'area_view' %}?id={{ areas.id }}">{{ areas.area }}</a>
-                            </td>
-                             <td> {{ areas.country.country }}</td>
-                            <td> {{ areas.state.state }}</td>
-                            <td> {{ areas.city.city }}</td>
-                            <td> {{ areas.status }}</td>
-                            <td> {{ areas.created_at }}</td>
-                            <td> {{ areas.updated_at }}</td>
-                        </tr>
-                    {% endfor %}
-
-                    </tbody>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">{{ areas.status }}</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">{{ areas.created_at }}</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">{{ areas.updated_at }}</span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="{% url 'aragonapp:area_add' %}?id={{ areas.id }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                          Edit
+                        </a>
+                        <a href="{% url 'aragonapp:area_view' %}?id={{ areas.id }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                          View
+                        </a>
+                      </td>
+                    </tr>
+                   {% endfor %}
+                  </tbody>
                 </table>
+              </div>
             </div>
+          </div>
         </div>
-    {% endif %}
-
-</body>
+      </div>
+    </div>
+{% endblock %}

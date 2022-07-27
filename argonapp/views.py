@@ -10,7 +10,7 @@ from django.conf import settings
 # Create your views here.
 def index(request):
 
-    return render(request,"index.html")
+    return render(request,"dashboard.html")
 
 def helo(request):
     return  HttpResponse('<h1> Hello world </h1>')
@@ -52,6 +52,15 @@ def country_view(request):
     if country_id:
         country_one = Country.objects.get(id=country_id)
     country = Country.objects.all().order_by('country')
+    return render(request, "country/country_view.html",
+                  {'country': country, 'country_one': country_one})
+
+def country_list(request):
+    country_id = request.GET.get('id')
+    country_one = []
+    if country_id:
+        country_one = Country.objects.get(id=country_id)
+    country = Country.objects.all().order_by('country')
     return render(request, "country/country_list.html",
                   {'country': country, 'country_one': country_one})
 
@@ -82,7 +91,7 @@ def country_entry(request):
     except Exception as e:
         return JsonResponse({'msg': str(e)}, status=400)
 
-    return redirect("country_view")
+    return redirect("aragonapp:country_list")
 
 
 def country_delete(request):
@@ -96,7 +105,8 @@ def country_delete(request):
         except Exception as e:
             return JsonResponse({'msg': str(e)}, status=400)
 
-def state_view(request):
+# STATE FUNCTIONS STARTS
+def state_list(request):
     state_id = request.GET.get('id')
     state_one = []
 
@@ -104,6 +114,16 @@ def state_view(request):
         state_one = State.objects.get(id=state_id)
     state = State.objects.all().order_by('state')
     return render(request, "state/state_list.html",
+                  {'state': state, 'state_one': state_one})
+
+def state_view(request):
+    state_id = request.GET.get('id')
+    state_one = []
+
+    if state_id:
+        state_one = State.objects.get(id=state_id)
+    state = State.objects.all().order_by('state')
+    return render(request, "state/state_view.html",
                   {'state': state, 'state_one': state_one})
 
 def state_add(request):
@@ -130,7 +150,7 @@ def state_entry(request):
         state = State(country=country_one, state=state, status=status)
 
     state.save()
-    return redirect("state_view")
+    return redirect("aragonapp:state_list")
 
 def state_delete(request):
     state_id = request.GET.get('id')
@@ -143,13 +163,22 @@ def state_delete(request):
         except Exception as e:
             return JsonResponse({'msg': str(e)}, status=400)
 
-def city_view(request):
+def city_list(request):
     city_id = request.GET.get('id')
     city_one = []
     if city_id:
         city_one = City.objects.get(id=city_id)
     city = City.objects.all().order_by('city')
     return render(request, "city/city_list.html",
+                  {'city': city, 'city_one': city_one})
+
+def city_view(request):
+    city_id = request.GET.get('id')
+    city_one = []
+    if city_id:
+        city_one = City.objects.get(id=city_id)
+    city = City.objects.all().order_by('city')
+    return render(request, "city/city_view.html",
                   {'city': city, 'city_one': city_one})
 
 def city_add(request):
@@ -179,7 +208,7 @@ def city_entry(request):
         city = City(country=country_one, state=state_one, status=status, city=city)
 
     city.save()
-    return redirect("city_view")
+    return redirect("aragonapp:city_list")
 
 def city_delete(request):
     city_id = request.GET.get('id')
@@ -192,13 +221,22 @@ def city_delete(request):
         except Exception as e:
             return JsonResponse({'msg': str(e)}, status=400)
 
-def area_view(request):
+def area_list(request):
     area_id = request.GET.get('id')
     area_one = []
     if area_id:
         area_one = Area.objects.get(id=area_id)
     area = Area.objects.all().order_by('city')
     return render(request, "area/area_list.html",
+                  {'area': area, 'area_one': area_one})
+
+def area_view(request):
+    area_id = request.GET.get('id')
+    area_one = []
+    if area_id:
+        area_one = Area.objects.get(id=area_id)
+    area = Area.objects.all().order_by('city')
+    return render(request, "area/area_view.html",
                   {'area': area, 'area_one': area_one})
 
 def area_add(request):
@@ -231,7 +269,7 @@ def area_entry(request):
         area = Area(country=country_one, state=state_one, area=area, city=city_one, status=status)
 
     area.save()
-    return redirect("area_view")
+    return redirect("aragonapp:area_list")
 
 def area_delete(request):
     area_id = request.GET.get('id')

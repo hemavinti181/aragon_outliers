@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block htmlbody %}
+<body>
+
+<h1>
+    <a href="{% url 'state_view' %}">State</a>
+    <a href="{% url 'state_add' %}"><i class="fas fa-folder-plus"></i></a>
+</h1>
+
+
+    {% if state_one %}
+        <div class="d-flex flex-row">
+            <div>
+                <h4>{{ state_one.state }}
+                        <a href="{% url 'state_add' %}?id={{ state_one.id }}"><i class="fas fa-edit"></i></a>
+                        <a id="btn_del" href="{% url 'state_delete' %}?id={{ state_one.id }}" class="pl-2"> <i class="fas fa-trash"></i></a>
+                </h4>
+                <ul class="milestones milestones-bordered">
+                    <li> Country: {{ state_one.country }}</li>
+                    <li> State: {{ state_one.state }}</li>
+                    <li> status: {{ state_one.status }}</li>
+                    <li> created_at: {{ state_one.created_at }}</li>
+                    <li> updated_at: {{ state_one.updated_at }}</li>
+                </ul>
+            </div>
+        </div>
+    {% else %}
+
+        <div class="d-flex flex-row">
+            <div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">State</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">status</th>
+                        <th scope="col">created_at</th>
+                        <th scope="col">updated_at</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for states in state %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'state_view' %}?id={{ states.id }}">{{ states.state }}</a>
+                            </td>
+                             <td> {{ states.country.country }}</td>
+                            <td> {{ states.status }}</td>
+                            <td> {{ states.created_at }}</td>
+                            <td> {{ states.updated_at }}</td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+
+</body>
+{% endblock %}

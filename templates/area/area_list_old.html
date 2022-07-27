@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block htmlbody %}
+<body>
+
+<h1>
+    <a href="{% url 'area_view' %}">Area</a>
+    <a href="{% url 'area_add' %}"><i class="fas fa-folder-plus"></i></a>
+</h1>
+
+
+    {% if area_one %}
+        <div class="d-flex flex-row">
+            <div>
+                <h4>{{ area_one.state }}
+                        <a href="{% url 'area_add' %}?id={{ area_one.id }}"><i class="fas fa-edit"></i></a>
+                        <a id="btn_del" href="{% url 'area_delete' %}?id={{ area_one.id }}" class="pl-2"> <i class="fas fa-trash"></i></a>
+                </h4>
+                <ul class="milestones milestones-bordered">
+                    <li> Country: {{ area_one.country_id }}</li>
+                    <li> State: {{ area_one.state }}</li>
+                    <li> City: {{ area_one.city }}</li>
+                    <li> Area: {{ area_one.area }}</li>
+                    <li> status: {{ area_one.status }}</li>
+                    <li> created_at: {{ area_one.created_at }}</li>
+                    <li> updated_at: {{ area_one.updated_at }}</li>
+                </ul>
+            </div>
+        </div>
+    {% else %}
+
+        <div class="d-flex flex-row">
+            <div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Area</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">State</th>
+                        <th scope="col">City</th>
+                        <th scope="col">status</th>
+                        <th scope="col">created_at</th>
+                        <th scope="col">updated_at</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for areas in area %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'area_view' %}?id={{ areas.id }}">{{ areas.area }}</a>
+                            </td>
+                             <td> {{ areas.country.country }}</td>
+                            <td> {{ areas.state.state }}</td>
+                            <td> {{ areas.city.city }}</td>
+                            <td> {{ areas.status }}</td>
+                            <td> {{ areas.created_at }}</td>
+                            <td> {{ areas.updated_at }}</td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+
+</body>
+{% endblock %}

@@ -11,35 +11,29 @@
           <div class="card">
             <div class="card-header pb-0">
               <div class="d-flex align-items-center">
-                <p class="mb-0">Edit Country</p>
+                <p class="mb-0">View Country</p>
                 <a class="nav-link"  href="{% url 'aragonapp:country_list'%}"><button class="btn btn-primary btn-sm ms-auto">Country Data</button></a>
               </div>
             </div>
             <div class="card-body">
-              <p class="text-uppercase text-sm">User Information</p>
-              <form id="form_new_site" action="{% url 'aragonapp:country_entry' %}" method="post"
-                  enctype="multipart/form-data"> {% csrf_token %}
+              <p class="text-uppercase text-sm">Country Information</p>
                 <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="country" class="form-control-label" >Country</label>
                     <input class="form-control" type="text" name="country" id="country" placeholder="country"
-                           value='{{ country_qs.country }}' required>
+                           value='{{ country_one.country }}' readonly>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="status">Status</label>
-                    <select class="selectpicker show-tick form-control" id='status' name='status' required>
-                        <option value="True"{% if country_qs.status %}selected{% endif %}>Active</option>
-                        <option value="False"{% if not country_qs.status %}selected{% endif %}>Inactive</option>
-                    </select>
+                    <label for="status" class="form-control-label">Status</label>
+                    <input class="form-control" type="email" name="status" id="status"
+                           placeholder="status" value='{{ country_one.status }}' readonly>
+                  </div>
                 </div>
-                </div>
-
+                
               </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
             </div>
           </div>
         </div>

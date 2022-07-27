@@ -3,24 +3,15 @@
 {% block title %}Login{% endblock %}
 
 {% block htmlbody %}
-<div class="card shadow-lg mx-4 card-profile-bottom">
-    </div>
-    <div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header pb-0">
-              <div class="d-flex align-items-center">
-                <p class="mb-0">Edit Area</p>
-                <a class="nav-link"  href="{% url 'aragonapp:area_list'%}"><button class="btn btn-primary btn-sm ms-auto">Area Data</button></a>
-              </div>
-            </div>
-            <div class="card-body">
-              <p class="text-uppercase text-sm">User Information</p>
-              <form id="form_new_site" action="{% url 'aragonapp:area_entry' %}" method="post"
+<body>
+    <div class="d-flex flex-row">
+        <div>
+            <form id="form_new_site" action="{% url 'area_entry' %}" method="post"
                   enctype="multipart/form-data"> {% csrf_token %}
-                  <div class="col-md-6">
-                    <div class="form-group ">
+                <div class="form-group ">
+                    <input type="hidden" name="id" id="id" value={{ area_qs.id }}>
+                </div>
+                <div class="form-group ">
                     <label for="country">Country</label>
                     <select class="selectpicker show-tick form-control" data-live-search="true" id="country" name="country" required>-->
                         {% for country in countries %}
@@ -28,9 +19,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                  </div>
-                <div class="col-md-6">
-                  <div class="form-group">
+                <div class="form-group">
                     <label for="state">State</label>
                     <select class="selectpicker show-tick form-control" data-live-search="true" name="state"
                             id="state" required>
@@ -40,46 +29,37 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
+                <div class="form-group">
                     <label for="city">City</label>
                     <select class="selectpicker show-tick form-control" data-live-search="true" name="city"
                             id="city" required>
                         {% for city in cities %}
                             <option value="{{ city.id }}"
-                                    {% if area_qs.city_id == city.id %}selected{% endif %}>{{ city.city }}</option>
+                                    {% if city_qs.city_id == city.id %}selected{% endif %}>{{ city.city }}</option>
                         {% endfor %}
                     </select>
-                    </div>
                 </div>
-                <div class="col-md-6">
-                     <div class="form-group ">
-                        <label class="control-label" for="area">Area</label>
-                        <input type="text" required class="form-control" name="area" id="area" placeholder="area"
-                               value='{{ area_qs.area }}'>
-                    </div>
-                </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
+                <div class="form-group">
                     <label for="status">Status</label>
                     <select class="selectpicker show-tick form-control" id='status' name='status' required>
-                        <option value="True"{% if area_qs.status %}selected{% endif %}>Active</option>
-                        <option value="False"{% if not area_qs.status %}selected{% endif %}>Inactive</option>
+                        <option value="True"{% if city_qs.status %}selected{% endif %}>1</option>
+                        <option value="False"{% if not city_qs.status %}selected{% endif %}>0</option>
                     </select>
                 </div>
+                <div class="form-group ">
+                    <label class="control-label" for="area">Area</label>
+                    <input type="text" required class="form-control" name="area" id="area" placeholder="area"
+                           value='{{ area_qs.area }}'>
                 </div>
-            </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
-            </div>
-          </div>
+
         </div>
-      </div></div>
-<body>
+    </div>
+</body>
 
-
-   <script type="text/javascript">
+ <script type="text/javascript">
         $("#form_new_site").submit(function (e) {
             e.preventDefault();
             $.ajax({
@@ -87,7 +67,7 @@
                 type: $(this).attr('method'),
                 url: $(this).attr('action'),
                 success: function (data) {
-                    window.location.href = "{% url 'aragonapp:area_view' %}";
+                    window.location.href = "{% url 'area_view' %}";
                 },
                 error: function (xhr) {
                     if (xhr.hasOwnProperty("responseJSON") && xhr.responseJSON.hasOwnProperty("msg")) {
@@ -101,5 +81,5 @@
             })
         })
 
- </script>
+   </script>
 {% endblock %}
