@@ -10,15 +10,15 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header pb-0">
-              <div class="d-flex align-items-center">
-                <p class="mb-0">Edit Area</p>
+              <div class="d-flex align-items-center" style="float:right;">
                 <a class="nav-link"  href="{% url 'aragonapp:area_list'%}"><button class="btn btn-primary btn-sm ms-auto">Area Data</button></a>
               </div>
             </div>
             <div class="card-body">
-              <p class="text-uppercase text-sm">User Information</p>
-              <form id="form_new_site" action="{% url 'aragonapp:area_entry' %}" method="post"
+              <p class="text-uppercase text-sm">Area Information</p>
+              <form id="form_new_site" action="{% url 'aragonapp:area_edit' %}" method="post"
                   enctype="multipart/form-data"> {% csrf_token %}
+                  <input type="hidden" name="area_id" id="area_id" value="{{ area_qs.id}}">
                   <div class="col-md-6">
                     <div class="form-group ">
                     <label for="country">Country</label>

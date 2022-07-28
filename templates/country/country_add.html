@@ -10,16 +10,16 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header pb-0">
-              <div class="d-flex align-items-center">
-                <p class="mb-0">Edit Country</p>
+              <div class="d-flex align-items-center"  style="float:right;">
                 <a class="nav-link"  href="{% url 'aragonapp:country_list'%}"><button class="btn btn-primary btn-sm ms-auto">Country Data</button></a>
               </div>
             </div>
             <div class="card-body">
-              <p class="text-uppercase text-sm">User Information</p>
-              <form id="form_new_site" action="{% url 'aragonapp:country_entry' %}" method="post"
+              <p class="text-uppercase text-sm">Country Information</p>
+              <form id="form_new_site" action="{% url 'aragonapp:country_edit' %}" method="post"
                   enctype="multipart/form-data"> {% csrf_token %}
                 <div class="row">
+                  <input type="hidden" name="country_id" id="country_id" value="{{ country_qs.id}}">
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="country" class="form-control-label" >Country</label>

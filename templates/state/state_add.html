@@ -10,26 +10,24 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header pb-0">
-              <div class="d-flex align-items-center">
-                <p class="mb-0">Edit State</p>
+              <div class="d-flex align-items-center" style="float:right;">
                 <a class="nav-link"  href="{% url 'aragonapp:state_list'%}"><button class="btn btn-primary btn-sm ms-auto">State Data</button></a>
               </div>
             </div>
             <div class="card-body">
-              <p class="text-uppercase text-sm">User Information</p>
-              <form id="form_new_site" action="{% url 'aragonapp:state_entry' %}" method="post"
+              <p class="text-uppercase text-sm">State Information</p>
+              <form id="form_new_site" action="{% url 'aragonapp:state_edit' %}" method="post"
                   enctype="multipart/form-data"> {% csrf_token %}
+                  <input type="hidden" name="state_id" id="state_id" value="{{ state_qs.id}}">
                   <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="country">Country</label>
-                        <select class="selectpicker show-tick form-control" name="country"
-                            id="country" required>
+                    <div class="form-group ">
+                    <label for="country">Country</label>
+                    <select class="selectpicker show-tick form-control" data-live-search="true" id="country" name="country" required>-->
                         {% for country in countries %}
-                            <option value="{{ country.id }}"
-                                    {% if state_qs.country == country.id %}selected{% endif %}>{{ country.country }}</option>
+                            <option value="{{ country.id }}" {% if state_qs.country_id == country.id %}selected{% endif %}>{{ country.country }}</option>
                         {% endfor %}
                     </select>
-                    </div>
+                </div>
                   </div>
                 <div class="col-md-6">
                   <div class="form-group ">

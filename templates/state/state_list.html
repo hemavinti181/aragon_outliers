@@ -8,9 +8,9 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Country table</h6>
+              <h6>State table</h6>
               <div class="card-header pb-0">
-              <div class="d-flex align-items-center">
+              <div class="d-flex align-items-center" style="float:right;">
                 <a href="{% url 'aragonapp:state_add'%}"><button class="btn btn-primary btn-sm ms-auto">Add State</button></a>
               </div>
             </div>
@@ -33,17 +33,17 @@
                   {% for states in state %}
                     <tr>
 
-                      <td>
-                        <div class="d-flex px-2 py-1">
+                      <td align-middle text-center>
+                        <div d-flex px-2 py-1>
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm">{{ states.state }}</h6>
                           </div>
                         </div>
                       </td>
-                      <td>
+                      <td align-middle text-center>
                         <p class="text-xs font-weight-bold mb-0">{{ states.country.country }}</p>
                       </td>
-                      <td>
+                      <td align-middle text-center>
                         <p class="text-xs font-weight-bold mb-0">{{ states.status }}</p>
                       </td>
                       <td class="align-middle text-center">
@@ -52,13 +52,16 @@
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">{{ states.updated_at }}</span>
                       </td>
-                      <td class="align-middle">
-                        <a href="{% url 'aragonapp:state_add' %}?id={{ states.id }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                        <a href="{% url 'aragonapp:state_view' %}?id={{ states.id }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          View
-                        </a>
+                      <td class="align-middle text-center">
+                        <a class="btn btn-link text-dark px-3 mb-0" href="{% url 'aragonapp:state_add' %}?id={{ states.id }}"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+                        <a class="btn btn-link text-dark px-3 mb-0" href="{% url 'aragonapp:state_view' %}?id={{ states.id }}"><i class="fas fa-search text-dark me-2" aria-hidden="true"></i>View</a>
+                        <a class="btn btn-link text-dark px-3 mb-0" href="{% url 'aragonapp:state_delete' %}?id={{ states.id }}"><i class="fas fa-trash text-dark me-2" aria-hidden="true"></i>Delete</a>
+<!--                        <a href="{% url 'aragonapp:state_add' %}?id={{ states.id }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">-->
+<!--                          Edit-->
+<!--                        </a>-->
+<!--                        <a href="{% url 'aragonapp:state_view' %}?id={{ states.id }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">-->
+<!--                          View-->
+<!--                        </a>-->
                       </td>
                     </tr>
                    {% endfor %}

@@ -10,15 +10,15 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header pb-0">
-              <div class="d-flex align-items-center">
-                <p class="mb-0">Edit City</p>
+              <div class="d-flex align-items-center" style="float:right;">
                 <a class="nav-link"  href="{% url 'aragonapp:city_list'%}"><button class="btn btn-primary btn-sm ms-auto">City Data</button></a>
               </div>
             </div>
             <div class="card-body">
-              <p class="text-uppercase text-sm">User Information</p>
-              <form id="form_new_site" action="{% url 'aragonapp:city_entry' %}" method="post"
+              <p class="text-uppercase text-sm">City Information</p>
+              <form id="form_new_site" action="{% url 'aragonapp:city_edit' %}" method="post"
                   enctype="multipart/form-data"> {% csrf_token %}
+                  <input type="hidden" name="city_id" id="city_id" value="{{ city_qs.id}}">
                   <div class="col-md-6">
                     <div class="form-group ">
                     <label for="country">Country</label>
@@ -44,16 +44,17 @@
                      <div class="form-group ">
                         <label class="control-label" for="city">City</label>
                         <input type="text" required class="form-control" name="city" id="city" placeholder="city"
-                               value='{{ state_qs.city }}'>
+                               value='{{ city_qs.city }}'>
                     </div>
                 </div>
+
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="status">Status</label>
                     <select class="selectpicker show-tick form-control" id='status' name='status' required>
-                        <option value="True"{% if state_qs.status %}selected{% endif %}>Active</option>
-                        <option value="False"{% if not state_qs.status %}selected{% endif %}>Inactive</option>
+                        <option value="True"{% if city_qs.status %}selected{% endif %}>Active</option>
+                        <option value="False"{% if not city_qs.status %}selected{% endif %}>Inactive</option>
                     </select>
                 </div>
                 </div>
