@@ -52,6 +52,10 @@ def country_view(request):
     if country_id:
         country_one = Country.objects.get(id=country_id)
     country = Country.objects.filter(deleted=False).order_by('country')
+    if country_one.status == True:
+        country_one.status = "Active"
+    else:
+        country_one.status = "Inactive"
     return render(request, "country/country_view.html",
                   {'country': country, 'country_one': country_one})
 
@@ -61,6 +65,11 @@ def country_list(request):
     if country_id:
         country_one = Country.objects.get(id=country_id)
     country = Country.objects.filter(deleted=False).order_by('country')
+    for countries in country:
+        if countries.status == True:
+            countries.status = "Active"
+        else:
+            countries.status = "Inactive"
     return render(request, "country/country_list.html",
                   {'country': country, 'country_one': country_one})
 
@@ -101,6 +110,11 @@ def state_list(request):
     if state_id:
         state_one = State.objects.get(id=state_id, deleted=False)
     state = State.objects.filter(deleted=False).order_by('state')
+    for states in state:
+        if states.status == True:
+            states.status = "Active"
+        else:
+            states.status = "Inactive"
     return render(request, "state/state_list.html",
                   {'state': state, 'state_one': state_one})
 
@@ -111,6 +125,10 @@ def state_view(request):
     if state_id:
         state_one = State.objects.get(id=state_id, deleted=False)
     state = State.objects.filter(deleted=False).order_by('state')
+    if state_one.status == True:
+        state_one.status = "Active"
+    else:
+        state_one.status = "Inactive"
     return render(request, "state/state_view.html",
                   {'state': state, 'state_one': state_one})
 
@@ -153,6 +171,11 @@ def city_list(request):
     if city_id:
         city_one = City.objects.get(id=city_id, deleted=False)
     city = City.objects.filter(deleted=False).order_by('city')
+    for cities in city:
+        if cities.status == True:
+            cities.status = "Active"
+        else:
+            cities.status = "Inactive"
     return render(request, "city/city_list.html",
                   {'city': city, 'city_one': city_one})
 
@@ -162,6 +185,10 @@ def city_view(request):
     if city_id:
         city_one = City.objects.get(id=city_id, deleted=False)
     city = City.objects.filter(deleted=False).order_by('city')
+    if city_one.status == True:
+        city_one.status = "Active"
+    else:
+        city_one.status = "Inactive"
     return render(request, "city/city_view.html",
                   {'city': city, 'city_one': city_one})
 
@@ -209,6 +236,11 @@ def area_list(request):
     if area_id:
         area_one = Area.objects.get(id=area_id, deleted=False)
     area = Area.objects.filter(deleted=False).order_by('city')
+    for areas in area:
+        if areas.status == True:
+            areas.status = "Active"
+        else:
+            areas.status = "Inactive"
     return render(request, "area/area_list.html",
                   {'area': area, 'area_one': area_one})
 
@@ -218,6 +250,11 @@ def area_view(request):
     if area_id:
         area_one = Area.objects.get(id=area_id, deleted=False)
     area = Area.objects.filter(deleted=False).order_by('city')
+    for areas in area:
+        if areas.status == True:
+            areas.status = "Active"
+        else:
+            areas.status = "Inactive"
     return render(request, "area/area_view.html",
                   {'area': area, 'area_one': area_one})
 

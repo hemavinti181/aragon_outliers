@@ -35,6 +35,7 @@ class Area(models.Model):
     state = models.ForeignKey(State, null=True, blank=True, on_delete=models.SET_NULL, related_name='area_state')
     city = models.ForeignKey(City, null=True, blank=True, on_delete=models.SET_NULL, related_name='area_city')
     area = models.CharField(max_length=200)
+    zipcode = models.TextField(max_length=8, null=True, blank=True)
     deleted = models.BooleanField(default=False)
     status = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
