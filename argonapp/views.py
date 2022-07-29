@@ -274,6 +274,7 @@ def area_edit(request):
     state = request.POST.get('state')
     city = request.POST.get('city')
     area = request.POST.get('area')
+    zipcode = request.POST.get('zipcode')
     status = request.POST.get('status')
     country_one = Country.objects.get(id=country, deleted=False)
     state_one = State.objects.get(id=state, deleted=False)
@@ -285,10 +286,11 @@ def area_edit(request):
         area_qs.state = state_one
         area_qs.city = city_one
         area_qs.area = area
+        area_qs.zipcode = zipcode
         area_qs.status = status
         area_qs.save()
     else:
-        area = Area(country=country_one, state=state_one, area=area, city=city_one, status=status)
+        area = Area(country=country_one, state=state_one, area=area, city=city_one, status=status, zipcode=zipcode)
         area.save()
     return redirect("aragonapp:area_list")
 
