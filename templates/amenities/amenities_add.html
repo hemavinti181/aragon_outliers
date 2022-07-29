@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block htmlbody %}
+<div class="card shadow-lg mx-4 card-profile-bottom">
+    </div>
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+                <div class="card-header pb-0">
+                  <div class="d-flex align-items-center" style="float:right;">
+                    <a class="nav-link"  href="{% url 'aragonapp:amenities_list'%}"><button class="btn btn-primary btn-sm ms-auto">Amenities Data</button></a>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <p class="text-uppercase text-sm">Amenities Information</p>
+                  <form id="form_new_site" action="{% url 'aragonapp:amenities_edit' %}" method="post"
+                      enctype="multipart/form-data"> {% csrf_token %}
+                      <input type="hidden" name="amenities_id" id="amenities_id" value="{{ amenities_qs.id}}">
+                        <div class="col-md-6">
+                            <div class="col-md-6">
+                                 <div class="form-group ">
+                                    <label class="control-label" for="name">Name</label>
+                                    <input type="text" required class="form-control" name="name" id="name" required placeholder="name"
+                                           value='{{ amenities_qs.name }}'>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                  <div class="form-group">
+                                        <label for="status">Type</label>
+                                        <select class="selectpicker show-tick form-control" id='type' name='type' required>
+                                            <option value="indoor"{% if amenities_qs.type %}selected{% endif %}>Indoor</option>
+                                            <option value="outdoor"{% if not amenities_qs.type %}selected{% endif %}>Outdoor</option>
+                                        </select>
+                                  </div>
+                            </div>
+
+                             <div class="col-md-6">
+                                  <div class="form-group">
+                                        <label for="status">Status</label>
+                                        <select class="selectpicker show-tick form-control" id='status' name='status' required>
+                                            <option value="True"{% if amenities_qs.status %}selected{% endif %}>Active</option>
+                                            <option value="False"{% if not amenities_qs.status %}selected{% endif %}>Inactive</option>
+                                        </select>
+                                  </div>
+                            </div>
+
+                        </div>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<body>
+
+
+   <script type="text/javascript">
+        $("#form_new_site").submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                data: $(this).serialize(),
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                success: function (data) {
+                    window.location.href = "{% url 'aragonapp:amenities_view' %}";
+                },
+                error: function (xhr) {
+                    if (xhr.hasOwnProperty("responseJSON") && xhr.responseJSON.hasOwnProperty("msg")) {
+                        swal({
+                            text: xhr.responseJSON.msg,
+                            icon: "error",
+                            dangerMode: true,
+                        })
+                    }
+                }
+            })
+        })
+
+ </script>
+{% endblock %}
