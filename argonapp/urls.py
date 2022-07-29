@@ -27,4 +27,21 @@ urlpatterns = [
     path('area_edit', views.area_edit, name='area_edit'),
     path('area/add', views.area_add, name='area_add'),
     path('area/delete', views.area_delete, name='area_delete'),
+    path('amenities_list', views.amenities_list, name='amenities_list'),
+    path('amenities_view', views.amenities_view, name='amenities_view'),
+    path('amenities_edit', views.amenities_edit, name='amenities_edit'),
+    path('amenities/add', views.amenities_add, name='amenities_add'),
+    path('amenities/delete', views.amenities_delete, name='amenities_delete'),
+    path('nearby_landmark_list', views.nearby_landmark_list, name='nearby_landmark_list'),
+    path('nearby_landmark_view', views.nearby_landmark_view, name='nearby_landmark_view'),
+    path('nearby_landmark_edit', views.nearby_landmark_edit, name='nearby_landmark_edit'),
+    path('nearby_landmark/add', views.nearby_landmark_add, name='nearby_landmark_add'),
+    path('nearby_landmark/delete', views.nearby_landmark_delete, name='nearby_landmark_delete'),
+    path('package_list', views.package_list, name='package_list'),
+    path('package_view', views.package_view, name='package_view'),
+    path('package_edit', views.package_edit, name='package_edit'),
+    path('package/add', views.package_add, name='package_add'),
+    path('package/delete', views.package_delete, name='package_delete'),
+
+
 ]

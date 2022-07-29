@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block htmlbody %}
+<div class="card shadow-lg mx-4 card-profile-bottom">
+    </div>
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+              <div class="card-header pb-0">
+                <div class="d-flex align-items-center" style="float:right;">
+                  <a class="nav-link"  href="{% url 'aragonapp:package_list'%}"><button class="btn btn-primary btn-sm ms-auto">Package Data</button></a>
+                </div>
+              </div>
+              <div class="card-body">
+                <p class="text-uppercase text-sm">Package Information</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="package_name" class="form-control-label" >Package Name</label>
+                              <input class="form-control" type="text" name="package_name" id="package_name" placeholder="package_name"
+                                     value='{{ package_one.package_name }}' readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                                 <div class="form-group ">
+                                    <label class="control-label" for="package_price">Package Price</label>
+                                    <input type="text" required class="form-control" name="package_price" id="package_price" readonly placeholder="package_price"
+                                           value='{{ package_one.package_price }}'>
+                                </div>
+                        </div>
+
+                        <div class="col-md-6">
+                                 <div class="form-group ">
+                                    <label class="control-label" for="package_life">Package Life</label>
+                                    <input type="text" required class="form-control" name="package_life" id="package_life" readonly placeholder="package_life"
+                                           value='{{ package_one.package_life }}'>
+                                </div>
+                        </div>
+
+                        <div class="col-md-6">
+                                 <div class="form-group ">
+                                    <label class="control-label" for="package_type">Package Type</label>
+                                    <input type="text" required class="form-control" name="package_type" id="package_type" readonly placeholder="package_type"
+                                           value='{{ package_one.package_type }}'>
+                                </div>
+                        </div>
+
+                        <div class="col-md-6">
+                                 <div class="form-group ">
+                                    <label class="control-label" for="applicable_for">Applicable For</label>
+                                    <input type="text" required class="form-control" name="applicable_for" id="applicable_for" readonly placeholder="applicable_for"
+                                           value='{{ package_one.applicable_for }}'>
+                                </div>
+                        </div>
+
+                        <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="status">Status</label>
+                                <select class="selectpicker show-tick form-control" id='status' name='status' readonly>
+                                    <option value="True"{% if package_one.status %}selected{% endif %}>Active</option>
+                                    <option value="False"{% if not package_one.status %}selected{% endif %}>Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+<body>
+
+
+    <script type="text/javascript">
+        $("#form_new_site").submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                data: $(this).serialize(),
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                success: function (data) {
+                    if (data.hasOwnProperty('area_id')){
+                        window.location.href = "{% url 'aragonapp:area_view' %}?id=" + data.area_id;
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.hasOwnProperty("responseJSON") && xhr.responseJSON.hasOwnProperty("msg")) {
+                        swal({
+                            text: xhr.responseJSON.msg,
+                            icon: "error",
+                            dangerMode: true,
+                        })
+                    }
+                }
+            })
+        })
+
+    </script>
+{% endblock %}
