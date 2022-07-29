@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block htmlbody %}
+<div class="card shadow-lg mx-4 card-profile-bottom">
+    </div>
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header pb-0">
+              <div class="d-flex align-items-center"  style="float:right;">
+                <a class="nav-link"  href="{% url 'aragonapp:property_types_list'%}"><button class="btn btn-primary btn-sm ms-auto">Property Types Data</button></a>
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="text-uppercase text-sm">Property Types Information</p>
+              <form id="form_new_site" action="{% url 'aragonapp:property_types_edit' %}" method="post"
+                  enctype="multipart/form-data"> {% csrf_token %}
+                <div class="row">
+                  <input type="hidden" name="property_types_id" id="property_types_id" value="{{ property_for_qs.id}}">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="name" class="form-control-label" >Property Types</label>
+                    <input class="form-control" type="text" name="name" id="name" placeholder="name"
+                           value='{{ property_types_qs.name }}' required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="status">Status</label>
+                    <select class="selectpicker show-tick form-control" id='status' name='status' required>
+                        <option value="True"{% if property_types_qs.status %}selected{% endif %}>Active</option>
+                        <option value="False"{% if not property_types_qs.status %}selected{% endif %}>Inactive</option>
+                    </select>
+                </div>
+                </div>
+
+              </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div></div>
+<body>
+
+
+    <script type="text/javascript">
+        $("#form_new_site").submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                data: $(this).serialize(),
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                success: function (data) {
+                    if (data.hasOwnProperty('property_types_id')){
+                        window.location.href = "{% url 'aragonapp:property_types_view' %}?id=" + data.property_types_id;
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.hasOwnProperty("responseJSON") && xhr.responseJSON.hasOwnProperty("msg")) {
+                        swal({
+                            text: xhr.responseJSON.msg,
+                            icon: "error",
+                            dangerMode: true,
+                        })
+                    }
+                }
+            })
+        })
+
+    </script>
+{% endblock %}

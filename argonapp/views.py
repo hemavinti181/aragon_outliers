@@ -3,6 +3,7 @@ from django.shortcuts import HttpResponse
 from django.core.mail import send_mail
 from  django.contrib.auth.models import User,auth
 from .models import Country, State, City, Area, Amenities, Nearby_Landmark, Package
+from .models import Country, State, City, Area, Property_types, Property_for
 from django.http import HttpResponse, JsonResponse
 
 from django.contrib.auth import login,authenticate
@@ -302,7 +303,6 @@ def area_delete(request):
         area.save()
         return redirect("aragonapp:area_list")
 
-
 def amenities_list(request):
     amenities_id = request.GET.get('id')
     amenities_one = []
@@ -488,3 +488,115 @@ def package_delete(request):
         package.deleted = True
         package.save()
         return redirect("aragonapp:package_list")
+
+def property_types_view(request):
+    property_types_id = request.GET.get('id')
+    property_types_one = []
+    if property_types_id:
+        property_types_one = Property_types.objects.get(id=property_types_id)
+    property_types = Property_types.objects.filter(deleted=False).order_by('name')
+    if property_types_one.status == True:
+        property_types_one.status = "Active"
+    else:
+        property_types_one.status = "Inactive"
+    return render(request, "property_types/property_types_view.html",
+                  {'property_types': property_types, 'property_types_one': property_types_one})
+
+def property_types_list(request):
+    property_types_id = request.GET.get('id')
+    property_types_one = []
+    if property_types_id:
+        property_types_one = Property_types.objects.get(id=property_types_id)
+    property_types = Property_types.objects.filter(deleted=False).order_by('name')
+    for property_type in property_types:
+        if property_type.status == True:
+            property_type.status = "Active"
+        else:
+            property_type.status = "Inactive"
+    return render(request, "property_types/property_types_list.html",
+                  {'property_types': property_types, 'property_types_one': property_types_one})
+
+def property_types_add(request):
+    property_types_id = request.GET.get('id')
+    property_types_qs = []
+    if property_types_id:
+        property_types_qs = Property_types.objects.get(id=int(property_types_id), deleted=False)
+    return render(request, 'property_types/property_types_add.html', {'property_types_qs': property_types_qs})
+
+def property_types_edit(request):
+    property_types_id = request.POST.get('property_types_id')
+    property_type = request.POST.get('name')
+    status = request.POST.get('status')
+    if property_types_id:
+        property_types_qs = Property_types.objects.get(id=int(property_types_id), deleted=False)
+        property_types_qs.name = property_type
+        property_types_qs.status = status
+        property_types_qs.save()
+    else:
+        property_types = Property_types(name=property_type, status=status)
+        property_types.save()
+    return redirect("aragonapp:property_types_list")
+
+def property_types_delete(request):
+    property_types_id = request.GET.get('id')
+    if property_types_id:
+        property_types = Property_for.objects.get(id=property_types_id)
+        property_types.deleted = True
+        property_types.save()
+        return redirect("aragonapp:property_types_list")
+
+def property_for_view(request):
+    property_for_id = request.GET.get('id')
+    property_for_one = []
+    if property_for_id:
+        property_for_one = Property_types.objects.get(id=property_for_id)
+    property_for = Property_types.objects.filter(deleted=False).order_by('name')
+    if property_for_one.status == True:
+        property_for_one.status = "Active"
+    else:
+        property_for_one.status = "Inactive"
+    return render(request, "property_for/property_for_view.html",
+                  {'property_for': property_for, 'property_for_one': property_for_one})
+
+def property_for_list(request):
+    property_for_id = request.GET.get('id')
+    property_for_one = []
+    if property_for_id:
+        property_for_one = Property_for.objects.get(id=property_for_id)
+    property_for = Property_for.objects.filter(deleted=False).order_by('name')
+    for property in property_for:
+        if property.status == True:
+            property.status = "Active"
+        else:
+            property.status = "Inactive"
+    return render(request, "property_for/property_for_list.html",
+                  {'property_for': property_for, 'property_for_one': property_for_one})
+
+def property_for_add(request):
+    property_for_id = request.GET.get('id')
+    property_for_qs = []
+    if property_for_id:
+        property_for_qs = Property_for.objects.get(id=int(property_for_id), deleted=False)
+    return render(request, 'property_for/property_for_add.html', {'property_for_qs': property_for_qs})
+
+def property_for_edit(request):
+    property_for_id = request.POST.get('property_for_id')
+    property_for = request.POST.get('name')
+    status = request.POST.get('status')
+    if property_for_id:
+        property_for_qs = Property_for.objects.get(id=int(property_for_id), deleted=False)
+        property_for_qs.name = property_for
+        property_for_qs.status = status
+        property_for_qs.save()
+    else:
+        property_for = Property_for(name=property_for, status=status)
+        property_for.save()
+    return redirect("aragonapp:property_for_list")
+
+def property_for_delete(request):
+    property_for_id = request.GET.get('id')
+    if property_for_id:
+        property_for = Property_for.objects.get(id=property_for_id)
+        property_for.deleted = True
+        property_for.save()
+        return redirect("aragonapp:property_for_list")
