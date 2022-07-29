@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block htmlbody %}
+<body>
+    <div class="d-flex flex-row">
+        <div>
+            <form id="form_new_site" action="{% url 'city_entry' %}" method="post"
+                  enctype="multipart/form-data"> {% csrf_token %}
+                <div class="form-group ">
+                    <input type="hidden" name="id" id="id" value={{ city_qs.id }}>
+                </div>
+                <div class="form-group ">
+                    <label for="country">Country</label>
+                    <select class="selectpicker show-tick form-control" data-live-search="true" id="country" name="country" required>-->
+                        {% for country in countries %}
+                            <option value="{{ country.id }}" {% if city_qs.country_id == country.id %}selected{% endif %}>{{ country.country }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <select class="selectpicker show-tick form-control" data-live-search="true" name="state"
+                            id="state" required>
+                        {% for state in states %}
+                            <option value="{{ state.id }}"
+                                    {% if city_qs.state_id == state.id %}selected{% endif %}>{{ state.state }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select class="selectpicker show-tick form-control" id='status' name='status' required>
+                        <option value="True"{% if city_qs.status %}selected{% endif %}>1</option>
+                        <option value="False"{% if not city_qs.status %}selected{% endif %}>0</option>
+                    </select>
+                </div>
+                <div class="form-group ">
+                    <label class="control-label" for="city">City</label>
+                    <input type="text" required class="form-control" name="city" id="city" placeholder="city"
+                           value='{{ state_qs.city }}'>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+        </div>
+    </div>
+</body>
+
+ <script type="text/javascript">
+        $("#form_new_site").submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                data: $(this).serialize(),
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                success: function (data) {
+                    window.location.href = "{% url 'city_view' %}";
+                },
+                error: function (xhr) {
+                    if (xhr.hasOwnProperty("responseJSON") && xhr.responseJSON.hasOwnProperty("msg")) {
+                        swal({
+                            text: xhr.responseJSON.msg,
+                            icon: "error",
+                            dangerMode: true,
+                        })
+                    }
+                }
+            })
+        })
+
+ </script>
+{% endblock %}

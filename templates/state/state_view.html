@@ -10,36 +10,36 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header pb-0">
-              <div class="d-flex align-items-center"  style="float:right;">
-                <a class="nav-link"  href="{% url 'aragonapp:country_list'%}"><button class="btn btn-primary btn-sm ms-auto">Country Data</button></a>
+              <div class="d-flex align-items-center" style="float:right;">
+                <a class="nav-link"  href="{% url 'aragonapp:state_list'%}"><button class="btn btn-primary btn-sm ms-auto">State Data</button></a>
               </div>
             </div>
             <div class="card-body">
-              <p class="text-uppercase text-sm">Country Information</p>
-              <form id="form_new_site" action="{% url 'aragonapp:country_edit' %}" method="post"
-                  enctype="multipart/form-data"> {% csrf_token %}
+              <p class="text-uppercase text-sm">State Information</p>
                 <div class="row">
-                  <input type="hidden" name="country_id" id="country_id" value="{{ country_qs.id}}">
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="country" class="form-control-label" >Country</label>
                     <input class="form-control" type="text" name="country" id="country" placeholder="country"
-                           value='{{ country_qs.country }}' required>
+                           value='{{ state_one.country.country }}' readonly>
                   </div>
+                </div>
+                  <div class="form-group ">
+                    <label class="control-label" for="state">State</label>
+                    <input type="text" required class="form-control" name="state" id="state" placeholder="state"
+                           value='{{ state_one.state }}'>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="status">Status</label>
                     <select class="selectpicker show-tick form-control" id='status' name='status' required>
-                        <option value="True"{% if country_qs.status %}selected{% endif %}>Active</option>
-                        <option value="False"{% if not country_qs.status %}selected{% endif %}>Inactive</option>
+                        <option value="True"{% if state_one.status %}selected{% endif %}>Active</option>
+                        <option value="False"{% if not state_one.status %}selected{% endif %}>Inactive</option>
                     </select>
                 </div>
                 </div>
-
+                
               </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
             </div>
           </div>
         </div>
@@ -55,8 +55,8 @@
                 type: $(this).attr('method'),
                 url: $(this).attr('action'),
                 success: function (data) {
-                    if (data.hasOwnProperty('country_id')){
-                        window.location.href = "{% url 'aragonapp:country_view' %}?id=" + data.country_id;
+                    if (data.hasOwnProperty('state_id')){
+                        window.location.href = "{% url 'aragonapp:state_view' %}?id=" + data.state_id;
                     }
                 },
                 error: function (xhr) {

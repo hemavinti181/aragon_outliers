@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block htmlbody %}
+<div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <h6>City table</h6>
+              <div class="card-header pb-0">
+              <div class="d-flex align-items-center" style="float:right;">
+                <a href="{% url 'aragonapp:city_add'%}"><button class="btn btn-primary btn-sm ms-auto">Add City</button></a>
+              </div>
+            </div>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Country</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">State</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">City</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">created at</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">updated at</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">actions</th>
+                      <th class="text-secondary opacity-7"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for cities in city %}
+                    <tr>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">{{ cities.country.country }}</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">{{ cities.state.state }}</p>
+                      </td>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">{{ cities.city }}</h6>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">{{ cities.status }}</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">{{ cities.created_at }}</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">{{ cities.updated_at }}</span>
+                      </td>
+                      <td class="align-middle">
+                        <a class="btn btn-link text-dark px-3 mb-0" href="{% url 'aragonapp:city_add' %}?id={{ cities.id }}"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+                        <a class="btn btn-link text-dark px-3 mb-0" href="{% url 'aragonapp:city_view' %}?id={{ cities.id }}"><i class="fas fa-search text-dark me-2" aria-hidden="true"></i>View</a>
+                        <a class="btn btn-link text-dark px-3 mb-0" href="{% url 'aragonapp:city_delete' %}?id={{ cities.id }}"><i class="fas fa-trash text-dark me-2" aria-hidden="true"></i>Delete</a>
+<!--                        <a href="{% url 'aragonapp:city_add' %}?id={{ cities.id }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">-->
+<!--                          Edit-->
+<!--                        </a>-->
+<!--                        <a href="{% url 'aragonapp:city_view' %}?id={{ cities.id }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">-->
+<!--                          View-->
+<!--                        </a>-->
+                      </td>
+                    </tr>
+                   {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
