@@ -27,6 +27,19 @@ urlpatterns = [
     path('area_edit', views.area_edit, name='area_edit'),
     path('area/add', views.area_add, name='area_add'),
     path('area/delete', views.area_delete, name='area_delete'),
+
+    path('property_list', views.property_list, name='property_list'),
+    path('property_view', views.property_view, name='property_view'),
+    path('property_edit', views.property_edit, name='property_edit'),
+    path('property/add', views.property_add, name='property_add'),
+    path('property/delete', views.property_delete, name='property_delete'),
+
+    path('users_list', views.users_list, name='users_list'),
+    path('users_view', views.users_view, name='users_view'),
+    path('users_edit', views.users_edit, name='users_edit'),
+    path('users/add', views.users_add, name='users_add'),
+    path('users/delete', views.users_delete, name='users_delete'),
+    
     path('amenities_list', views.amenities_list, name='amenities_list'),
     path('amenities_view', views.amenities_view, name='amenities_view'),
     path('amenities_edit', views.amenities_edit, name='amenities_edit'),

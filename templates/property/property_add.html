@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block htmlbody %}
+<div class="card shadow-lg mx-4 card-profile-bottom">
+    </div>
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header pb-0">
+              <div class="d-flex align-items-center"  style="float:right;">
+                <a class="nav-link"  href="{% url 'aragonapp:property_list'%}"><button class="btn btn-primary btn-sm ms-auto">Property Data</button></a>
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="text-uppercase text-sm">Property Information</p>
+              <form id="form_new_site" action="{% url 'aragonapp:property_add' %}" method="post" enctype="multipart/form-data"> {% csrf_token %}
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Name</label>
+                      <input class="form-control" type="text" name="name" id="name" placeholder="Name" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Price</label>
+                      <input class="form-control" type="text" name="price" id="price" placeholder="Price" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Shortd Description</label>
+                      <textarea class="form-control" id="short_description" name="short_description" rows="3" cols="30" placeholder="Shortd Description" required></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Description</label>
+                       <textarea class="form-control" id="description" name="description" rows="3" cols="30" placeholder="Description" required></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Built Up Area Price</label>
+                      <input class="form-control" type="text" name="built_up_area_price" id="built_up_area_price" placeholder="Built Up Area Price"
+                              required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Property Type</label>
+                      <input class="form-control" type="text" name="property_type" id="property_type" placeholder="Property Type"
+                              required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Property For</label>
+                      <input class="form-control" type="text" name="property_for" id="property_for" placeholder="Property For"
+                              required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Property Added By User Type</label>
+                      <input class="form-control" type="text" name="property_added_by_user_type" id="property_added_by_user_type" placeholder="Property Added By User Type"
+                            required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Property User Id Added</label>
+                      <input class="form-control" type="text" name="property_user_id_added" id="property_user_id_added" placeholder="Property User Id Added"
+                             required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Built Up Area Size</label>
+                      <input class="form-control" type="text" name="built_up_area_size" id="built_up_area_size" placeholder="Built Up Area Size"
+                              required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Latitude</label>
+                      <input class="form-control" type="text" name="lat" id="lat" placeholder="Latitude"
+                              required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Longtude</label>
+                      <input class="form-control" type="text" name="longtude" id="longtude" placeholder="Longtude"
+                              required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Country</label>
+                      <input class="form-control" type="text" name="country" id="country" placeholder="country"
+                             value='{{ country_qs.country }}' required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="state">state</label>
+                      <select class="selectpicker show-tick form-control" id='state' name='state' required>
+                          <option value="True">Active</option>
+                          <option value="False">Inactive</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >City</label>
+                      <input class="form-control" type="text" name="city" id="city" placeholder="City" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Zipcode</label>
+                      <input class="form-control" type="text" name="zipcode" id="zipcode" placeholder="Zipcode"
+                             required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Sub Area</label>
+                      <input class="form-control" type="text" name="sub_area" id="sub_area" placeholder="Sub Area"
+                             required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Address</label>
+                      <input class="form-control" type="text" name="address" id="address" placeholder="Address"
+                             required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Size</label>
+                      <input class="form-control" type="text" name="size" id="size" placeholder="Size"
+                             required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Bed Rooms</label>
+                      <input class="form-control" type="text" name="bed_rooms" id="bed_rooms" placeholder="Bed Rooms"
+                             required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Bath Rooms</label>
+                      <input class="form-control" type="text" name="bath_rooms" id="bath_rooms" placeholder="Bath Rooms"
+                             required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Parking Slots</label>
+                      <input class="form-control" type="text" name="parking_slots" id="parking_slots" placeholder="Parking Slots"
+                             required>
+                    </div>
+                  </div>
+<!--                  <div class="col-md-6">-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="status">Status</label>-->
+<!--                        <select class="selectpicker show-tick form-control" id='status' name='status' required>-->
+<!--                            <option value="True"{% if country_qs.status %}selected{% endif %}>Active</option>-->
+<!--                            <option value="False"{% if not country_qs.status %}selected{% endif %}>Inactive</option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                  </div>-->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Indoor Amenities</label>
+                      <input class="form-control" type="text" name="indoor_amenities" id="indoor_amenities" placeholder="Indoor Amenities" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="country" class="form-control-label" >Outdoor Amenities</label>
+                      <input class="form-control" type="text" name="outdoor_amenities" id="outdoor_amenities" placeholder="Outdoor Amenities" required>
+                    </div>
+                  </div>
+                </div>
+                <center><button type="submit" class="btn btn-primary">Add</button></center>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<body>
+
+
+    <script type="text/javascript">
+        $("#form_new_site").submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                data: $(this).serialize(),
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                success: function (data) {
+                    if (data.hasOwnProperty('country_id')){
+                        window.location.href = "{% url 'aragonapp:property_view' %}?id=" + data.country_id;
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.hasOwnProperty("responseJSON") && xhr.responseJSON.hasOwnProperty("msg")) {
+                        swal({
+                            text: xhr.responseJSON.msg,
+                            icon: "error",
+                            dangerMode: true,
+                        })
+                    }
+                }
+            })
+        })
+
+    </script>
+{% endblock %}
