@@ -2,8 +2,11 @@ from django.shortcuts import render , redirect
 from django.shortcuts import HttpResponse
 from django.core.mail import send_mail
 from  django.contrib.auth.models import User,auth
-from .models import Country, State, City, Area
+from .models import Country, State, City, Area, Property, Users
 from django.http import HttpResponse, JsonResponse
+
+import random
+import string
 
 from django.contrib.auth import login,authenticate
 from django.conf import settings
@@ -301,3 +304,168 @@ def area_delete(request):
         area.deleted = True
         area.save()
         return redirect("aragonapp:area_list")
+
+
+# Property
+def property_view(request):
+    area_id = request.GET.get('id')
+    area_one = []
+    if area_id:
+        area_one = Area.objects.get(id=area_id, deleted=False)
+    area = Area.objects.filter(deleted=False).order_by('city')
+    for areas in area:
+        if areas.status == True:
+            areas.status = "Active"
+        else:
+            areas.status = "Inactive"
+    return render(request, "area/area_view.html",
+                  {'area': area, 'area_one': area_one})
+def property_list(request):
+    template = 'property/property_list.html'
+    country = Country.objects.filter(deleted=False).order_by('country')
+    for countries in country:
+        if countries.status == True:
+            countries.status = "Active"
+        else:
+            countries.status = "Inactive"
+    context = {'country': country}
+    return render(request, template, context)
+
+def property_add(request):
+    template = 'property/property_add.html'
+    context = {}
+    print(request.method)
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        price = request.POST.get('price')
+        short_description = request.POST.get('short_description')
+        description = request.POST.get('description')
+        built_up_area_price = request.POST.get('built_up_area_price')
+        property_type = request.POST.get('property_type')
+        property_for = request.POST.get('property_for')
+        property_added_by_user_type = request.POST.get('property_added_by_user_type')
+        property_user_id_added = request.POST.get('property_user_id_added')
+        lat = request.POST.get('lat')
+        long = request.POST.get('longtude')
+        address = request.POST.get('address')
+        country = request.POST.get('country')
+        state = request.POST.get('state')
+        city = request.POST.get('city')
+        zipcode = request.POST.get('zipcode')
+        sub_area = request.POST.get('sub_area')
+        size = request.POST.get('size')
+        built_up_area_size = request.POST.get('built_up_area_size')
+        bed_rooms = request.POST.get('bed_rooms')
+        bath_rooms = request.POST.get('bath_rooms')
+        parking_slots = request.POST.get('parking_slots')
+        indoor_amenities = request.POST.get('indoor_amenities')
+        outdoor_amenities = request.POST.get('outdoor_amenities')
+        deleted = False
+        status = "Active"
+        import datetime;
+
+        created_at = datetime.datetime.now()
+
+        unique_id = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(128))
+        # print('name', name, "short_description", short_description, "description", description, "price", price,
+        #       "built_up_area_price", built_up_area_price, "property_type", property_type, "property_for", property_for,
+        #       "property_added_by_user_type", property_added_by_user_type, "property_user_id_added",
+        #       property_user_id_added, "lat", lat, "long", long, "address", address, "country", country, "state", state,
+        #       "city", city, "zipcode", zipcode, "sub_area", sub_area, "size", size, "built_up_area_size",
+        #       built_up_area_size, "bed_rooms", bed_rooms, "bath_rooms", bath_rooms, "parking_slots", parking_slots,
+        #       "status", status, "unique_id", unique_id, "indoor_amenities", indoor_amenities, "outdoor_amenities",
+        #       outdoor_amenities, "deleted", deleted, "created_at", created_at, "updated_at", created_at)
+
+        property = Property(name=name,short_description=short_description,description=description,price=price,built_up_area_price=built_up_area_price,property_type=property_type,property_for=property_for,property_added_by_user_type=property_added_by_user_type,property_user_id_added=	property_user_id_added,lat=lat,long=long,address=address,country=country,state=state,city=city,zipcode=zipcode,sub_area=sub_area,size=size,	built_up_area_size=	built_up_area_size,bed_rooms=bed_rooms,bath_rooms=bath_rooms,parking_slots=parking_slots,status=status,unique_id=unique_id,indoor_amenities=indoor_amenities,outdoor_amenities=outdoor_amenities,deleted=deleted,created_at=created_at,updated_at=created_at)
+        property.save()
+        return redirect("aragonapp:property_list")
+
+    return render(request,template ,context)
+
+def property_edit(request):
+    template = 'property/area_add.html'
+    context = {}
+    country_id = request.POST.get('country_id')
+    country = request.POST.get('country')
+    status = request.POST.get('status')
+    if country_id:
+        country_qs = Country.objects.get(id=int(country_id), deleted=False)
+        country_qs.country = country
+        country_qs.status = status
+        country_qs.save()
+    else:
+        country = Country(country=country, status=status)
+        country.save()
+    return redirect("aragonapp:country_list")
+
+def property_delete(request):
+    template = 'property/area_add.html'
+    context = {}
+    country_id = request.GET.get('id')
+    if country_id:
+        country = Country.objects.get(id=country_id)
+        country.deleted = True
+        country.save()
+        return redirect("aragonapp:country_list")
+
+
+#Users
+
+def users_view(request):
+    area_id = request.GET.get('id')
+    area_one = []
+    if area_id:
+        area_one = Area.objects.get(id=area_id, deleted=False)
+    area = Area.objects.filter(deleted=False).order_by('city')
+    for areas in area:
+        if areas.status == True:
+            areas.status = "Active"
+        else:
+            areas.status = "Inactive"
+    return render(request, "area/area_view.html",
+                  {'area': area, 'area_one': area_one})
+def users_list(request):
+    template = 'users/user_list.html'
+    country = Country.objects.filter(deleted=False).order_by('country')
+    for countries in country:
+        if countries.status == True:
+            countries.status = "Active"
+        else:
+            countries.status = "Inactive"
+    context = {'country': country}
+    return render(request, template, context)
+
+def users_add(request):
+    template = 'users/user_add.html'
+    context = {}
+    country_id = request.GET.get('id')
+    country_qs = []
+    if country_id:
+        country_qs = Country.objects.get(id=int(country_id), deleted=False)
+    return render(request, 'country/country_add.html', {'country_qs': country_qs})
+
+def users_edit(request):
+    template = 'users/user_add.html'
+    context = {}
+    country_id = request.POST.get('country_id')
+    country = request.POST.get('country')
+    status = request.POST.get('status')
+    if country_id:
+        country_qs = Country.objects.get(id=int(country_id), deleted=False)
+        country_qs.country = country
+        country_qs.status = status
+        country_qs.save()
+    else:
+        country = Country(country=country, status=status)
+        country.save()
+    return redirect("aragonapp:country_list")
+
+def users_delete(request):
+    template = 'users/user_add.html'
+    context = {}
+    country_id = request.GET.get('id')
+    if country_id:
+        country = Country.objects.get(id=country_id)
+        country.deleted = True
+        country.save()
+        return redirect("aragonapp:country_list")
